@@ -2,7 +2,6 @@ mod parse_utils;
 use std::collections::HashSet;
 
 fn main() {
-    println!("Hello, world!");
     let numbers = parse_utils::parse_int_list("data/1.txt");
     let answer : i32 = numbers.iter().sum();
     println!("Result part 1: {answer}");
