@@ -2,7 +2,7 @@ mod parse_utils;
 use std::collections::HashSet;
 
 fn main() {
-    let numbers = parse_utils::parse_int_list("data/1.txt");
+    let numbers = parse_utils::parse_int_list("data/1.txt", "\n");
     let answer : i32 = numbers.iter().sum();
     println!("Result part 1: {answer}");
     let mut frequencies : HashSet<i32> = HashSet::new();
