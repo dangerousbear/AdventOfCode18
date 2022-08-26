@@ -9,7 +9,7 @@ fn main() {
     println!("Result part 2: {:?}", total_value);
 }
 
-fn parse_node(slice : &[i32]) -> (i32, usize) {
+fn parse_node(slice: &[i32]) -> (i32, usize) {
     let mut total_metadata_sum = 0;
     let mut total_node_size = 2;
     let num_sub_nodes = slice[0];
@@ -27,7 +27,7 @@ fn parse_node(slice : &[i32]) -> (i32, usize) {
     (total_metadata_sum, total_node_size)
 }
 
-fn parse_node2(slice : &[i32]) -> (i32, usize) {
+fn parse_node2(slice: &[i32]) -> (i32, usize) {
     let mut total_value = 0;
     let mut total_node_size = 2;
     let num_sub_nodes = slice[0];
@@ -41,10 +41,10 @@ fn parse_node2(slice : &[i32]) -> (i32, usize) {
     for _ in 0..num_metadata_entries {
         let entry = slice[total_node_size];
         if num_sub_nodes == 0 {
-          total_value += entry;
+            total_value += entry;
         } else if entry >= 1 && (entry as usize) <= subnode_values.len() {
             total_value += subnode_values[(entry - 1) as usize];
-        } 
+        }
         total_node_size += 1;
     }
     (total_value, total_node_size)
