@@ -6,7 +6,9 @@ fn main() {
     let mut letterCounts: HashMap<String, usize> = HashMap::new();
     for c in polymer.chars() {
         let cLower = c.to_lowercase().to_string();
-        if ( letterCounts.contains_key(&cLower)) { continue; }
+        if (letterCounts.contains_key(&cLower)) {
+            continue;
+        }
         println!("Processing {}", cLower);
         let cUpper = c.to_uppercase().to_string();
         let mut polymerCopy = polymer.clone().replace(&cLower, "").replace(&cUpper, "");
@@ -31,7 +33,7 @@ fn evolve(polymerIn: &String) -> usize {
             {
                 let snip = String::from(prev_char) + &String::from(c);
                 // println!("Removing {}", snip);
-                let new_polymer = polymer.replace( &snip, "").to_owned();
+                let new_polymer = polymer.replace(&snip, "").to_owned();
                 polymer = new_polymer;
                 // println!("Resulting {:?}", polymer);
                 break;
@@ -40,8 +42,7 @@ fn evolve(polymerIn: &String) -> usize {
         }
         if polymer.len() == length {
             break;
-        }
-        else {
+        } else {
             length = polymer.len();
         }
     }

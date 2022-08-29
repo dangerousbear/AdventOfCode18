@@ -1,11 +1,10 @@
-use std::io::{self, Read, Write};
-use std::io::stdin;
-use std::{thread, time};
-use std::str::{self, FromStr};
 use plotters::prelude::*;
+use std::io::stdin;
+use std::io::{self, Read, Write};
+use std::str::{self, FromStr};
+use std::{thread, time};
 
 mod parse_utils;
-
 
 #[derive(Clone, Debug)]
 struct Point {
@@ -19,15 +18,18 @@ fn main() {
     // println!("Input {:?}", parse_pair("<2,3>"));
 
     let lines = parse_utils::parse_str_list("data/10.txt");
-    let mut points  = Vec::with_capacity(lines.len());
+    let mut points = Vec::with_capacity(lines.len());
     for line in lines {
-        let pv_split : Vec<&str>= line.split("v").collect();
-        let pos = &pv_split[0][pv_split[0].find("<").unwrap()+1..pv_split[0].len()-1];
-        let vel = &pv_split[1][pv_split[1].find("<").unwrap()+1..pv_split[1].len()-1];
-        points.push(Point{ x: pos[..pos.find(",").unwrap()].parse::<i32>().unwrap(), y : pos[pos.find(",").unwrap()+1..].parse::<i32>().unwrap() , 
-        vx : vel[..vel.find(",").unwrap()].parse::<i32>().unwrap(), vy: vel[vel.find(",").unwrap()+1..].parse::<i32>().unwrap()  } );
+        let pv_split: Vec<&str> = line.split("v").collect();
+        let pos = &pv_split[0][pv_split[0].find("<").unwrap() + 1..pv_split[0].len() - 1];
+        let vel = &pv_split[1][pv_split[1].find("<").unwrap() + 1..pv_split[1].len() - 1];
+        points.push(Point {
+            x: pos[..pos.find(",").unwrap()].parse::<i32>().unwrap(),
+            y: pos[pos.find(",").unwrap() + 1..].parse::<i32>().unwrap(),
+            vx: vel[..vel.find(",").unwrap()].parse::<i32>().unwrap(),
+            vy: vel[vel.find(",").unwrap() + 1..].parse::<i32>().unwrap(),
+        });
         println!("{:?}", &points.last());
-
     }
 
     for p in &mut points {
@@ -37,35 +39,36 @@ fn main() {
     // let delay = time::Duration::from_millis(10);
     let mut n = 1;
     // loop {
-        // thread::sleep(delay);
+    // thread::sleep(delay);
 
-        let path = format!("./plots/plot{}.png",n);
-        n += 1;
-        // Drawing
-        let root_area = BitMapBackend::new(&path, (600, 400))
-        .into_drawing_area();
-        root_area.fill(&WHITE).unwrap();
-    
-        let mut ctx = ChartBuilder::on(&root_area)
-            .set_label_area_size(LabelAreaPosition::Left, 40)
-            .set_label_area_size(LabelAreaPosition::Bottom, 40)
-            .caption("Scatter Demo", ("sans-serif", 40))
-            .build_cartesian_2d(100..200, 145..180)
-            .unwrap();
-    
-        ctx.configure_mesh().draw().unwrap();
-    
-        ctx.draw_series(
-            points.iter().map(|point| TriangleMarker::new((point.x, point.y), 5, &BLUE)),
-        )
+    let path = format!("./plots/plot{}.png", n);
+    n += 1;
+    // Drawing
+    let root_area = BitMapBackend::new(&path, (600, 400)).into_drawing_area();
+    root_area.fill(&WHITE).unwrap();
+
+    let mut ctx = ChartBuilder::on(&root_area)
+        .set_label_area_size(LabelAreaPosition::Left, 40)
+        .set_label_area_size(LabelAreaPosition::Bottom, 40)
+        .caption("Scatter Demo", ("sans-serif", 40))
+        .build_cartesian_2d(100..200, 145..180)
         .unwrap();
 
-        // Advance simulation
+    ctx.configure_mesh().draw().unwrap();
 
-        // for p in &mut points {
-        //     p.x += p.vx;
-        //     p.y += p.vy;
-        // }
+    ctx.draw_series(
+        points
+            .iter()
+            .map(|point| TriangleMarker::new((point.x, point.y), 5, &BLUE)),
+    )
+    .unwrap();
+
+    // Advance simulation
+
+    // for p in &mut points {
+    //     p.x += p.vx;
+    //     p.y += p.vy;
+    // }
     // }
 
     // let coords: Vec<(i32, i32)> = lines
