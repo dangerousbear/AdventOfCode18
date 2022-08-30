@@ -7,8 +7,12 @@ fn main() {
         .iter()
         .map(|line| {
             (
-                line[0..line.find(",").unwrap()].parse::<i32>().expect("Failed x parse"),
-                line[line.find(",").unwrap() + 2..].parse::<i32>().expect("Failed y parse"),
+                line[0..line.find(",").unwrap()]
+                    .parse::<i32>()
+                    .expect("Failed x parse"),
+                line[line.find(",").unwrap() + 2..]
+                    .parse::<i32>()
+                    .expect("Failed y parse"),
             )
         })
         .collect();
@@ -32,17 +36,21 @@ fn main() {
         }
     }
 
-
     let mut touches_edge = vec![false; coords.len()];
     let mut num_elements = vec![0; coords.len()];
 
-    for ((y,x), value) in field.indexed_iter() {
+    for ((y, x), value) in field.indexed_iter() {
         if x == 0 || y == 0 || x == max_x_coord as usize || y == max_y_coord as usize {
             touches_edge[*value as usize] = true;
         }
         num_elements[*value as usize] += 1;
     }
-    let max_finite_area = num_elements.iter().zip(touches_edge.iter()).map(|(n, touches)| if *touches {0} else {*n} ).max().unwrap();
+    let max_finite_area = num_elements
+        .iter()
+        .zip(touches_edge.iter())
+        .map(|(n, touches)| if *touches { 0 } else { *n })
+        .max()
+        .unwrap();
 
     println!("Touches edge {:?}", touches_edge);
     println!("Num elements{:?}", num_elements);
@@ -58,4 +66,3 @@ fn main() {
     let safe_area = field2.iter().filter(|v| **v < 10000).count();
     println!("Result part 2: {:?}", safe_area);
 }
-

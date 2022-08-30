@@ -93,21 +93,21 @@ fn main() {
     let mut max_id = 0;
     let mut max_time = 0;
     let mut max_frequency = 0;
-    for (id, sleep_times) in guard_id_to_sleep_map{
-        let max_local_time = sleep_times.iter()
-        .enumerate()
-        .map(|(x, y)| (y, x))
-        .max()
-        .unwrap()
-        .1;
+    for (id, sleep_times) in guard_id_to_sleep_map {
+        let max_local_time = sleep_times
+            .iter()
+            .enumerate()
+            .map(|(x, y)| (y, x))
+            .max()
+            .unwrap()
+            .1;
         let frequency = sleep_times[max_local_time];
-        if frequency  > max_frequency {
-            max_frequency = frequency ; 
+        if frequency > max_frequency {
+            max_frequency = frequency;
             max_time = max_local_time;
             max_id = id;
         }
     }
     let answer2 = max_time as i32 * max_id;
     println!("Result part 2: {answer2}");
-
 }

@@ -20,7 +20,7 @@ fn main() {
     let lines = parse_utils::parse_str_list("data/10.txt");
     let mut points = Vec::with_capacity(lines.len());
     for line in lines {
-        let pv_split: Vec<&str> = line.split("v").collect();
+        let pv_split = line.split("v").collect_vec();
         let pos = &pv_split[0][pv_split[0].find("<").unwrap() + 1..pv_split[0].len() - 1];
         let vel = &pv_split[1][pv_split[1].find("<").unwrap() + 1..pv_split[1].len() - 1];
         points.push(Point {

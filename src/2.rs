@@ -26,9 +26,9 @@ fn main() {
             for (c1, c2) in id.chars().zip(id2.chars()) {
                 if c1 != c2 {
                     num_diffs += 1;
-                } 
+                }
             }
-            if num_diffs == 1{
+            if num_diffs == 1 {
                 println!("Result part 2: Words {id}, {id2}")
             }
         }
